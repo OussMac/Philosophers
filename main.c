@@ -2,6 +2,8 @@
 
 int main(int argc, char *argv[])
 {
-	parse_input(argc, argv);
-	return(0);
+
+	if(parse_input(argc, argv) != EXIT_SUCCESS)
+		return(EXIT_FAILURE);
+	return(EXIT_SUCCESS);
 }
