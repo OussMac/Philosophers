@@ -64,7 +64,6 @@ int parse_input(int argc, char *argv[], t_table *table)
     int     i;
     long    nbr;
 
-	(void)table;
     if (argc != 5 && argc != 6)
         return (print_comm("Usage: ./philo <philo> <die> <eat> <sleep> [meals]\n"), EXIT_FAILURE);
     i = 1;
