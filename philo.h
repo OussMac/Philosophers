@@ -7,7 +7,17 @@
 # include <sys/time.h> // for gettimeofday
 # include <pthread.h> // pthread_create, pthread_join...
 # include <stdbool.h> // for boolean flags
-# include <limits.h>
+# include <limits.h> // for overflow check
+
+
+
+// text colors
+# define RED "\e[31m"
+# define GRN "\e[32m"
+# define RST "\e[97m"
+# define ORN "\e[33m"
+
+// # define gettimeofday(...) -1
 
 
 // table type exists
@@ -40,9 +50,9 @@ typedef struct s_philo
 typedef struct s_table
 {
     int     philo_number;
+    long    time_to_die;
     long    time_to_eat;
     long    time_to_sleep;
-    long    time_to_die;
 
     int     nbr_of_meals;
     long    start;
@@ -54,8 +64,20 @@ typedef struct s_table
     pthread_mutex_t death_lock;
 } t_table;
 
+// parsing and input.
+int     parse_input(int argc, char *argv[], t_table *table);
+int     init_table_data(int argc , char *argv[], t_table *table);
+long	ft_atol(const char *str);
 
-int parse_input(int argc, char *argv[]);
+// time
+long u_time(void);
+
+// error handling
+void    print_error(char *error);
+void    print_comm(char *comment);
+
+// for debuging
+void    print_table(t_table *table);
 
 
 #endif // PHILO_H

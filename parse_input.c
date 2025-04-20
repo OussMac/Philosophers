@@ -34,7 +34,7 @@ static bool	syntax_parser(char *str)
 	return (false);
 }
 
-static long	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int		i;
 	long	pow;
@@ -59,31 +59,27 @@ static long	ft_atol(const char *str)
 	return (pow * s);
 }
 
-int parse_input(int argc, char *argv[])
+int parse_input(int argc, char *argv[], t_table *table)
 {
     int     i;
     long    nbr;
 
-    if (argc != 4 && argc != 5)
-    {
-        printf("Usage: ./philo <philo> <die> <eat> <sleep> [meals]\n");
-        return (EXIT_FAILURE);
-    }
+	(void)table;
+    if (argc != 5 && argc != 6)
+        return (print_comm("Usage: ./philo <philo> <die> <eat> <sleep> [meals]\n"), EXIT_FAILURE);
     i = 1;
     while (argv[i])
     {
         if (syntax_parser(argv[i]))
-        {
-            printf("Invalid Number Syntax\n");
-            return (EXIT_FAILURE);
-        }
+            return (print_error("Invalid Number Syntax.\n"), EXIT_FAILURE);
         nbr = ft_atol(argv[i]);
-        if (!(nbr >= INT_MIN && nbr <= INT_MAX))
-        {
-            printf("Invalid Number Range\n");
-            return (EXIT_FAILURE);
-        }
+        if (!(nbr >= INT_MIN && nbr <= INT_MAX) || nbr <= 0)
+            return (print_error("Invalid Number Range.\n"), EXIT_FAILURE);
+		if (i == 1 && nbr > 200)
+			return (print_error("Too Many Philosophers.\n"), EXIT_FAILURE);
         i++;
     }
+	if (init_table_data(argc, argv, table) != EXIT_SUCCESS)
+		return (print_error("Table Initalization Failed.\n"), EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }

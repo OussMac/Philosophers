@@ -3,7 +3,7 @@ HEADER = philo.h
 CC = cc
 NAME = philo
 
-SRC = main.c parse_input.c
+SRC = debug_helper.c main.c parse_input.c init_data.c
 
 OBJ = $(SRC:.c=.o)
 
