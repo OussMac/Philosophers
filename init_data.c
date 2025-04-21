@@ -20,6 +20,7 @@ long u_time(void)
 
 int init_table_data(int argc , char *argv[], t_table *table)
 {
+    table->end_feast = false;
     table->philo_number = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
@@ -42,5 +43,8 @@ int allocate_data(t_table *table)
     table->forks = malloc(table->philo_number * sizeof(t_fork));
     if (!table->forks)
         return(free(table->philos), EXIT_FAILURE);
+    if (pthread_mutex_init(&table->print_lock, NULL) != 0 
+        || pthread_mutex_init(&table->death_lock, NULL) != 0)
+        return(free(table->forks), free(table->philos), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }

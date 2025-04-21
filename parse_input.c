@@ -59,7 +59,7 @@ long	ft_atol(const char *str)
 	return (pow * s);
 }
 
-int parse_input(int argc, char *argv[], t_table *table)
+int parse_input(int argc, char *argv[])
 {
     int     i;
     long    nbr;
@@ -78,7 +78,5 @@ int parse_input(int argc, char *argv[], t_table *table)
 			return (print_error("Too Many Philosophers.\n"), EXIT_FAILURE);
         i++;
     }
-	if (init_table_data(argc, argv, table) != EXIT_SUCCESS)
-		return (print_error("Table Initalization Failed.\n"), EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
