@@ -67,8 +67,9 @@ typedef struct s_table
 } t_table;
 
 // parsing and input.
-int     parse_input(int argc, char *argv[]);
-int     init_table_data(int argc , char *argv[], t_table *table);
+int     parse_input(int argc, char *argv[], t_table *table);
+int     general_table(int argc , char *argv[],t_table *table);
+int     init_table_data(t_table *table);
 long	ft_atol(const char *str);
 
 // allocate_data

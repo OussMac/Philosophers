@@ -43,15 +43,15 @@ long u_time(void)
     return(tv.tv_usec);
 }
 
-int init_table_data(int argc , char *argv[], t_table *table)
+int init_table_data( t_table *table)
 {
-    general_table(argc, argv, table); 
     init_philos(table);
     return(EXIT_SUCCESS);
 }
 
 int allocate_data(t_table *table)
 {
+    printf("\n");
     table->philos = (t_philo *) malloc(table->philo_number * sizeof(t_philo));
     if (!table->philos)
         return(EXIT_FAILURE);

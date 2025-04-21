@@ -59,7 +59,7 @@ long	ft_atol(const char *str)
 	return (pow * s);
 }
 
-int parse_input(int argc, char *argv[])
+int parse_input(int argc, char *argv[], t_table *table)
 {
     int     i;
     long    nbr;
@@ -78,5 +78,6 @@ int parse_input(int argc, char *argv[])
 			return (print_error("Too Many Philosophers.\n"), EXIT_FAILURE);
         i++;
     }
+	general_table(argc, argv, table); 
     return (EXIT_SUCCESS);
 }
