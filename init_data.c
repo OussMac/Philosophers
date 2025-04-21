@@ -1,24 +1,6 @@
 #include "philo.h"
 
-void    print_error(char *error)
-{
-    printf(RED"[-] %s"RST, error);
-}
-
-void    print_comm(char *comment)
-{
-    printf(ORN"[*] %s"RST, comment);
-}
-
-long u_time(void)
-{
-    struct timeval tv;
-    if(gettimeofday(&tv, NULL) != 0)
-        return (print_error("Failed To Get Time.\n"), -1);
-    return(tv.tv_usec);
-}
-
-int init_table_data(int argc , char *argv[], t_table *table)
+int general_table(int argc , char *argv[],t_table *table)
 {
     table->end_feast = false;
     table->philo_number = ft_atol(argv[1]);
@@ -32,6 +14,37 @@ int init_table_data(int argc , char *argv[], t_table *table)
     table->start = u_time();
     if (table->start == -1)
         return(EXIT_FAILURE);
+    return (EXIT_SUCCESS);
+}
+
+int init_philos(t_table *table)
+{
+    int i;
+
+    i = 0;
+    while (i < table->philo_number)
+    {
+        table->philos[i].ph_id = i + 1;
+        table->philos[i].meals_eaten = 0;
+        table->philos[i].last_meal = table->start;
+        i++;
+    }
+    return(EXIT_SUCCESS);
+}
+
+long u_time(void)
+{
+    struct timeval tv;
+    if(gettimeofday(&tv, NULL) != 0)
+        return (print_error("Failed To Get Time.\n"), -1);
+    return(tv.tv_usec);
+}
+
+int init_table_data(int argc , char *argv[], t_table *table)
+{
+    if(general_table(argc, argv, table) != EXIT_SUCCESS)
+        return(EXIT_FAILURE);
+    init_philos(table);
     return(EXIT_SUCCESS);
 }
 
