@@ -24,8 +24,10 @@ int init_philos(t_table *table)
     i = 0;
     while (i < table->philo_number)
     {
+        printf("=== %d < %d\n", i, table->philo_number);
         table->philos[i].ph_id = i + 1;
         table->philos[i].meals_eaten = 0;
+        printf("=== meals eaten %d\n", table->philos[i].meals_eaten);
         table->philos[i].last_meal = table->start;
         table->philos[i].table = table;
         i++;
