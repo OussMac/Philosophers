@@ -23,7 +23,9 @@ void *philosopher(void *arg)
         if (end || (philo->meals_eaten >= philo->table->nbr_of_meals))
             break;
         pthread_mutex_lock(&philo->right_fork->fork);
+        print_action(philo, "has taken a fork");
         pthread_mutex_lock(&philo->left_fork->fork);
+        print_action(philo, "has taken a fork");
 
         print_action(philo, "is eating");
         pthread_mutex_lock(&philo->table->eat_lock);
