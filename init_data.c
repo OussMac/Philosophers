@@ -19,7 +19,15 @@ int general_table(int argc , char *argv[],t_table *table)
     return (EXIT_SUCCESS);
 }
 
-int init_philos(t_table *table)
+long    m_time(void)
+{
+    struct timeval tv;
+    if(gettimeofday(&tv, NULL) != 0)
+        return (print_error("Failed To Get Time.\n"), -1);
+    return(tv.tv_sec * 1000);
+}
+
+int init_table_data( t_table *table)
 {
     int i;
 
@@ -33,27 +41,12 @@ int init_philos(t_table *table)
         table->philos[i].left_fork = &table->forks[i];
         table->philos[i].right_fork = &table->forks[(i + 1) % table->philo_number];
         table->philos[i].table = table;
-        pthread_create(&table->philos[i].th_id, NULL, philosopher, table);
         // initing forks
         table->philos[i].left_fork->fork_id = i;
         table->philos[i].right_fork->fork_id = (i + 1) % table->philo_number;
-        pthread_mutex_init(&table->forks->fork, NULL);
+        pthread_mutex_init(&table->forks->fork + i, NULL);
         i++;
     }
-    return(EXIT_SUCCESS);
-}
-
-long    m_time(void)
-{
-    struct timeval tv;
-    if(gettimeofday(&tv, NULL) != 0)
-        return (print_error("Failed To Get Time.\n"), -1);
-    return(tv.tv_sec * 1000);
-}
-
-int init_table_data( t_table *table)
-{
-    init_philos(table);
     return(EXIT_SUCCESS);
 }
 

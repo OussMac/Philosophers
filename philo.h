@@ -81,7 +81,8 @@ void    free_data(t_table *table);
 void    clean_up(t_table *table);
 
 // scenario
-void *philosopher(void *arg);
+int     start_scenario(t_table *table);
+void    *philosopher(void *arg);
 
 // time
 long    m_time(void);

@@ -74,8 +74,8 @@ int parse_input(int argc, char *argv[], t_table *table)
         nbr = ft_atol(argv[i]);
         if (!(nbr >= INT_MIN && nbr <= INT_MAX) || nbr <= 0)
             return (print_error("Invalid Number Range.\n"), EXIT_FAILURE);
-		// if (i == 1 && nbr > 200)
-		// 	return (print_error("Too Many Philosophers.\n"), EXIT_FAILURE);
+		if (i == 1 && nbr > 200)
+			return (print_error("Too Many Philosophers.\n"), EXIT_FAILURE);
         i++;
     }
 	general_table(argc, argv, table); 
