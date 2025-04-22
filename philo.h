@@ -15,6 +15,8 @@
 # define RST "\e[97m"
 # define ORN "\e[33m"
 # define BLU "\e[34m"
+# define YLW "\e[33m"
+# define MGN "\e[35m"
 
 // # define gettimeofday(...) -1
 // # define malloc(...) NULL
@@ -78,8 +80,11 @@ int     stack_data(t_table *table);
 void    free_data(t_table *table);
 void    clean_up(t_table *table);
 
+// scenario
+void *philosopher(void *arg);
+
 // time
-long u_time(void);
+long    m_time(void);
 
 // error handling
 void    print_error(char *error);

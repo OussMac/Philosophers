@@ -22,19 +22,19 @@ static void print_philos(t_table *table)
     int i;
 
     i = 0;
-    printf(BLU);
     while(i < table->philo_number)
     {
+        printf(BLU);
         printf("👴 Philo ID: %d\n", table->philos[i].ph_id);
-        // printf("🧵 Thread ID: %lu\n", table->philos[i].th_id);
+        printf("🧵 Thread ID: %lu\n", table->philos[i].th_id);
         printf("🍲 Meals Eaten: %d\n", table->philos[i].meals_eaten);
         printf("🥣 Last Meal: %ld\n", table->philos[i].last_meal);
-        // printf("🥄 Right Fork: %d\n", philo.right_fork->fork_id);
-        // printf("🥄 Left Fork: %d\n", philo.left_fork->fork_id);
+        printf(YLW"🥄 Left Fork: %d\n", table->philos[i].left_fork->fork_id);
+        printf(MGN"🥄 Right Fork: %d\n"BLU, table->philos[i].right_fork->fork_id);
         printf("  =======================  \n");
+        printf(RST);
         i++;
     }
-    printf(RST);
 }
 
 void    print_scene(t_table *table)
