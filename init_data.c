@@ -59,7 +59,8 @@ int allocate_data(t_table *table)
     if (!table->forks)
         return(free(table->philos), EXIT_FAILURE);
     if (pthread_mutex_init(&table->print_lock, NULL) != 0 
-        || pthread_mutex_init(&table->death_lock, NULL) != 0)
+        || pthread_mutex_init(&table->death_lock, NULL) != 0 
+        || pthread_mutex_init(&table->eat_lock, NULL) != 0)
         return(free(table->forks), free(table->philos), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }

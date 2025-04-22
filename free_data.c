@@ -34,4 +34,5 @@ void    clean_up(t_table *table)
     free_data(table);
     pthread_mutex_destroy(&table->print_lock);
     pthread_mutex_destroy(&table->death_lock);
+    pthread_mutex_destroy(&table->eat_lock);
 }

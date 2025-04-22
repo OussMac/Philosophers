@@ -66,6 +66,7 @@ typedef struct s_table
 
     pthread_mutex_t print_lock;
     pthread_mutex_t death_lock;
+    pthread_mutex_t eat_lock;
 } t_table;
 
 // parsing and input.
