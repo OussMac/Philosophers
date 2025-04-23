@@ -25,15 +25,10 @@ void    p_eating(t_philo *philo)
     print_action(philo, "has taken a fork");
 
     print_action(philo, "is eating");
-
-    pthread_mutex_lock(&philo->table->eat_lock);
-    philo->meals_eaten++;
-    pthread_mutex_unlock(&philo->table->eat_lock);
-
+    write_eaten(philo);
     ft_usleep(philo->table->time_to_eat);
-
     
-    write_meals_eaten(philo->last_meal, m_time(), philo->table);
+    write_last_meal(philo->last_meal, m_time(), philo->table);
 
     pthread_mutex_unlock(&philo->right_fork->fork);
     pthread_mutex_unlock(&philo->left_fork->fork);

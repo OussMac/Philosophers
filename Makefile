@@ -1,4 +1,4 @@
-FLAGS = -Wall -Werror -Wextra -fsanitize=thread -g
+FLAGS = -Wall -Werror -Wextra
 HEADER = philo.h
 CC = cc
 NAME = philo
@@ -10,7 +10,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -fsanitize=thread -g $^ -o $(NAME)
+	$(CC) $^ -o $(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@

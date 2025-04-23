@@ -8,9 +8,12 @@ void    *philosopher(void *arg)
     while (true)
     {
         if (philo->ph_id % 2 == 0)
-            ft_usleep(10);
-        if (check_death(philo->table) || philo->meals_eaten >= philo->table->nbr_of_meals)
+            ft_usleep(3);
+        if (check_end_flag(philo->table))
+        {
+            set_philo_nbr(philo->table);
             break;
+        }
         p_eating(philo);
         p_sleep(philo);
         p_think(philo);
@@ -29,15 +32,18 @@ void    *watcher(void *arg)
         i = 0;
         while(i < table->philo_number)
         {
-            if (check_meals_eaten(table->philos[i].last_meal, table->time_to_die, table))
+            if (check_eaten(&table->philos[i]))
+                write_death(&table->end_feast, table);
+            if (check_end_flag(table) || check_last_meal(table->philos[i].last_meal, table->time_to_die, table))
             {
                 write_death(&table->end_feast, table);
                 print_action(&table->philos[i], "died");
                 return (NULL);
             }
             i++;
+            usleep(500);
         }
-        usleep(500);
+        ft_usleep(5);
     }
     return (NULL);
 }
