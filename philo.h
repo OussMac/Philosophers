@@ -84,6 +84,11 @@ void    clean_up(t_table *table);
 // scenario
 int     start_scenario(t_table *table);
 void    *philosopher(void *arg);
+int     ft_usleep(long miliseconds);
+void    p_eating(t_philo *philo);
+void    p_sleep(t_philo *philo);
+void    p_think(t_philo *philo);
+void    print_action(t_philo *philo, char *str);
 
 // time
 long    m_time(void);

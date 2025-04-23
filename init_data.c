@@ -24,7 +24,7 @@ long    m_time(void)
     struct timeval tv;
     if(gettimeofday(&tv, NULL) != 0)
         return (print_error("Failed To Get Time.\n"), -1);
-    return(tv.tv_sec * 1000);
+    return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 int init_table_data( t_table *table)

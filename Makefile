@@ -1,16 +1,16 @@
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fsanitize=thread -g
 HEADER = philo.h
 CC = cc
 NAME = philo
 
-SRC = debug_helper.c main.c parse_input.c init_data.c free_data.c feast.c
+SRC = debug_helper.c main.c parse_input.c init_data.c free_data.c feast.c feast_utils.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $^ -o $(NAME)
+	$(CC) -fsanitize=thread -g $^ -o $(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@
