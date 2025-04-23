@@ -67,6 +67,7 @@ typedef struct s_table
     pthread_mutex_t print_lock;
     pthread_mutex_t death_lock;
     pthread_mutex_t eat_lock;
+    pthread_mutex_t write_lock;
 } t_table;
 
 // parsing and input.
@@ -89,6 +90,12 @@ void    p_eating(t_philo *philo);
 void    p_sleep(t_philo *philo);
 void    p_think(t_philo *philo);
 void    print_action(t_philo *philo, char *str);
+
+// wrrappers
+void    write_meals_eaten(long last_meal, long current_t, t_table *table);
+bool    check_meals_eaten(long last_meal, long time_to_die, t_table *table);
+void    write_death(bool *end, t_table *table);
+bool    check_death(t_table *table);
 
 // time
 long    m_time(void);

@@ -31,7 +31,9 @@ void    p_eating(t_philo *philo)
     pthread_mutex_unlock(&philo->table->eat_lock);
 
     ft_usleep(philo->table->time_to_eat);
-    philo->last_meal = m_time();
+
+    
+    write_meals_eaten(philo->last_meal, m_time(), philo->table);
 
     pthread_mutex_unlock(&philo->right_fork->fork);
     pthread_mutex_unlock(&philo->left_fork->fork);
