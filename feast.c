@@ -32,16 +32,13 @@ void    *watcher(void *arg)
         i = 0;
         while(i < table->philo_number)
         {
-            if (check_eaten(&table->philos[i]))
-                write_death(&table->end_feast, table);
-            if (check_end_flag(table) || check_last_meal(table->philos[i].last_meal, table->time_to_die, table))
+            if (check_eaten(&table->philos[i]) || check_last_meal(table->philos[i].last_meal, table->time_to_die, table))
             {
                 write_death(&table->end_feast, table);
                 print_action(&table->philos[i], "died");
                 return (NULL);
             }
             i++;
-            usleep(500);
         }
         ft_usleep(5);
     }
