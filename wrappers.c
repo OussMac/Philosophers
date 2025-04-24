@@ -4,9 +4,9 @@ void    write_last_meal(t_philo *philo, t_table *table)
 {
     pthread_mutex_lock(&table->write_lock);
     philo->last_meal = m_time() - table->start;
-    // pthread_mutex_lock(&philo->table->print_lock);
-    // printf(RED"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
-    // pthread_mutex_unlock(&philo->table->print_lock);
+    pthread_mutex_lock(&philo->table->print_lock);
+    printf(RED"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
+    pthread_mutex_unlock(&philo->table->print_lock);
     pthread_mutex_unlock(&table->write_lock);
 }
 
@@ -15,9 +15,9 @@ bool    check_last_meal(t_philo *philo)
     pthread_mutex_lock(&philo->table->write_lock);
     if (philo->last_meal >= philo->table->time_to_die)
     {
-        // pthread_mutex_lock(&philo->table->print_lock);
-        // printf(GRN"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
-        // pthread_mutex_unlock(&philo->table->print_lock);
+        pthread_mutex_lock(&philo->table->print_lock);
+        printf(GRN"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
+        pthread_mutex_unlock(&philo->table->print_lock);
         pthread_mutex_unlock(&philo->table->write_lock);
         return(true);
     }
@@ -43,6 +43,9 @@ bool    check_end_flag(t_table *table)
     pthread_mutex_unlock(&table->death_lock);
     return(false);
 }
+/// while 
+// index tal number of philos
+// function to
 
 void    write_eaten(t_philo *philo)
 {
