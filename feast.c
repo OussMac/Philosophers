@@ -9,7 +9,7 @@ void    *philosopher(void *arg)
     {
         if (philo->ph_id % 2 == 0)
             ft_usleep(3);
-        if (check_end_flag(philo->table))
+        if (check_end_flag(philo->table) || check_eaten(philo))
         {
             set_philo_nbr(philo->table);
             break;
@@ -32,10 +32,15 @@ void    *watcher(void *arg)
         i = 0;
         while(i < table->philo_number)
         {
-            if (check_eaten(&table->philos[i]) || check_last_meal(table->philos[i].last_meal, table->time_to_die, table))
+            if (check_last_meal(&table->philos[i]))
             {
                 write_death(&table->end_feast, table);
                 print_action(&table->philos[i], "died");
+                return (NULL);
+            }
+            if (check_nbr(table))
+            {
+                write_death(&table->end_feast, table);
                 return (NULL);
             }
             i++;
@@ -51,7 +56,8 @@ int start_scenario(t_table *table)
     pthread_t    t_watcher;
 
     i = 0;
-    while (i < table->philo_number)
+    int ph_nbr = table->philo_number;
+    while (i < ph_nbr)
     {
         pthread_create(&table->philos[i].th_id, NULL, philosopher, &table->philos[i]);
         i++;
@@ -59,7 +65,7 @@ int start_scenario(t_table *table)
     i = 0;
     pthread_create(&t_watcher, NULL, watcher, table);
     pthread_join(t_watcher, NULL);
-    while (i < table->philo_number)
+    while (i < ph_nbr)
         pthread_join(table->philos[i++].th_id, NULL);
     return (EXIT_SUCCESS);
 }

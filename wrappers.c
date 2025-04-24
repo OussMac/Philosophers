@@ -1,21 +1,27 @@
 #include "philo.h"
 
-void    write_last_meal(long last_meal, long current_t, t_table *table)
+void    write_last_meal(t_philo *philo, t_table *table)
 {
     pthread_mutex_lock(&table->write_lock);
-    last_meal = current_t;
+    philo->last_meal = m_time() - table->start;
+    // pthread_mutex_lock(&philo->table->print_lock);
+    // printf(RED"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
+    // pthread_mutex_unlock(&philo->table->print_lock);
     pthread_mutex_unlock(&table->write_lock);
 }
 
-bool    check_last_meal(long last_meal, long time_to_die, t_table *table)
+bool    check_last_meal(t_philo *philo)
 {
-    pthread_mutex_lock(&table->write_lock);
-    if (m_time() - last_meal >= time_to_die)
+    pthread_mutex_lock(&philo->table->write_lock);
+    if (philo->last_meal >= philo->table->time_to_die)
     {
-        pthread_mutex_unlock(&table->write_lock);
+        // pthread_mutex_lock(&philo->table->print_lock);
+        // printf(GRN"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , philo->last_meal, philo->table->time_to_die);
+        // pthread_mutex_unlock(&philo->table->print_lock);
+        pthread_mutex_unlock(&philo->table->write_lock);
         return(true);
     }
-    pthread_mutex_unlock(&table->write_lock);
+    pthread_mutex_unlock(&philo->table->write_lock);
     return (false);
 }
 
@@ -48,7 +54,7 @@ void    write_eaten(t_philo *philo)
 bool    check_eaten(t_philo *philo)
 {
     pthread_mutex_lock(&philo->table->eat_lock);
-    if (philo->meals_eaten >= philo->table->nbr_of_meals)
+    if (philo->table->nbr_of_meals != -1 && philo->meals_eaten >= philo->table->nbr_of_meals)
     {
         pthread_mutex_unlock(&philo->table->eat_lock);
         return(true);
@@ -67,7 +73,7 @@ void    set_philo_nbr(t_table *table)
 bool    check_nbr(t_table *table)
 {
     pthread_mutex_lock(&table->nbr_lock);
-    if (table->philo_number <= 0)
+    if (table->philo_number <= 1)
     {
         pthread_mutex_unlock(&table->nbr_lock);
         return (true);

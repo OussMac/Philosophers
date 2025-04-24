@@ -37,7 +37,7 @@ int init_table_data( t_table *table)
         // initing philos
         table->philos[i].ph_id = i + 1;
         table->philos[i].meals_eaten = 0;
-        table->philos[i].last_meal = table->start;
+        table->philos[i].last_meal = m_time() - table->start;
         table->philos[i].left_fork = &table->forks[i];
         table->philos[i].right_fork = &table->forks[(i + 1) % table->philo_number];
         table->philos[i].table = table;

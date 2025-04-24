@@ -13,7 +13,7 @@ int     ft_usleep(long miliseconds)
 
     start_time = m_time();
     while ((m_time() - start_time) < miliseconds)
-        usleep(500);
+        usleep(100);
     return (EXIT_SUCCESS);
 }
 
@@ -28,7 +28,7 @@ void    p_eating(t_philo *philo)
     write_eaten(philo);
     ft_usleep(philo->table->time_to_eat);
     
-    write_last_meal(philo->last_meal, m_time(), philo->table);
+    write_last_meal(philo, philo->table);
 
     pthread_mutex_unlock(&philo->right_fork->fork);
     pthread_mutex_unlock(&philo->left_fork->fork);

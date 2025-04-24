@@ -93,8 +93,8 @@ void    p_think(t_philo *philo);
 void    print_action(t_philo *philo, char *str);
 
 // wrrappers
-void    write_last_meal(long last_meal, long current_t, t_table *table);
-bool    check_last_meal(long last_meal, long time_to_die, t_table *table);
+void    write_last_meal(t_philo *philo, t_table *table);
+bool    check_last_meal(t_philo *philo);
 void    write_death(bool *end, t_table *table);
 bool    check_end_flag(t_table *table);
 void    write_eaten(t_philo *philo);
