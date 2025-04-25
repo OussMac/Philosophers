@@ -104,6 +104,7 @@ bool    check_nbr(t_table *table);
 
 // time
 long    m_time(void);
+long    get_time(t_table *table); // time since start
 
 // error handling
 void    print_error(char *error);

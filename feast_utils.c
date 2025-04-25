@@ -3,7 +3,7 @@
 void    print_action(t_philo *philo, char *str)
 {
     pthread_mutex_lock(&philo->table->print_lock);
-    printf("%ld %d %s\n", m_time() - philo->table->start, philo->ph_id, str);
+    printf("%ld %d %s\n", get_time(philo->table), philo->ph_id, str);
     pthread_mutex_unlock(&philo->table->print_lock);
 }
 

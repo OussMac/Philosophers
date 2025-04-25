@@ -27,6 +27,11 @@ long    m_time(void)
     return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
+long    get_time(t_table *table)
+{
+    return (m_time() - table->start);
+}
+
 int init_table_data( t_table *table)
 {
     int i;
@@ -37,7 +42,7 @@ int init_table_data( t_table *table)
         // initing philos
         table->philos[i].ph_id = i + 1;
         table->philos[i].meals_eaten = 0;
-        table->philos[i].last_meal = m_time() - table->start;
+        table->philos[i].last_meal = get_time(table);
         table->philos[i].left_fork = &table->forks[i];
         table->philos[i].right_fork = &table->forks[(i + 1) % table->philo_number];
         table->philos[i].table = table;

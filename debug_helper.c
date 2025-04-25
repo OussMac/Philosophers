@@ -39,6 +39,9 @@ static void print_philos(t_table *table)
 
 void    print_scene(t_table *table)
 {
+    pthread_mutex_lock(&table->print_lock);
     print_table(table);
     print_philos(table);
+    pthread_mutex_unlock(&table->print_lock);
+
 }
