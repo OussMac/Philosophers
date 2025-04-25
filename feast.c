@@ -5,10 +5,10 @@ void    *philosopher(void *arg)
     t_philo *philo;
     
     philo = (t_philo *) arg;
+    if (philo->ph_id % 2 == 0)
+        ft_usleep(3, philo->table);
     while (true)
     {
-        if (philo->ph_id % 2 == 0)
-            ft_usleep(3);
         if (check_end_flag(philo->table) || check_eaten(philo))
         {
             set_philo_nbr(philo->table);
@@ -45,7 +45,7 @@ void    *watcher(void *arg)
             }
             i++;
         }
-        ft_usleep(5);
+        ft_usleep(100, table);
     }
     return (NULL);
 }

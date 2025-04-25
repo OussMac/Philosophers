@@ -69,6 +69,7 @@ typedef struct s_table
     pthread_mutex_t eat_lock;
     pthread_mutex_t write_lock;
     pthread_mutex_t nbr_lock;
+    pthread_mutex_t sleep_lock;
 } t_table;
 
 // parsing and input.
@@ -86,7 +87,6 @@ void    clean_up(t_table *table);
 // scenario
 int     start_scenario(t_table *table);
 void    *philosopher(void *arg);
-int     ft_usleep(long miliseconds);
 void    p_eating(t_philo *philo);
 void    p_sleep(t_philo *philo);
 void    p_think(t_philo *philo);
@@ -103,6 +103,7 @@ void    set_philo_nbr(t_table *table);
 bool    check_nbr(t_table *table);
 
 // time
+int     ft_usleep(long miliseconds, t_table *table);
 long    m_time(void);
 long    get_time(t_table *table); // time since start
 

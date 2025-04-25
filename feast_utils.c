@@ -7,26 +7,43 @@ void    print_action(t_philo *philo, char *str)
     pthread_mutex_unlock(&philo->table->print_lock);
 }
 
-int     ft_usleep(long miliseconds)
+int     ft_usleep(long miliseconds, t_table *table)
 {
     long    start_time;
 
+    pthread_mutex_lock(&table->sleep_lock);
     start_time = m_time();
     while ((m_time() - start_time) < miliseconds)
         usleep(100);
+    pthread_mutex_unlock(&table->sleep_lock);
     return (EXIT_SUCCESS);
 }
 
 void    p_eating(t_philo *philo)
 {
-    pthread_mutex_lock(&philo->right_fork->fork);
-    print_action(philo, "has taken a fork");
-    pthread_mutex_lock(&philo->left_fork->fork);
-    print_action(philo, "has taken a fork");
+
+    // algo always pickup lowest index fork to prevent a deadlock better
+    if (philo->left_fork->fork_id < philo->right_fork->fork_id) {
+        pthread_mutex_lock(&philo->left_fork->fork);
+        print_action(philo, "has taken a fork");
+        pthread_mutex_lock(&philo->right_fork->fork);
+        print_action(philo, "has taken a fork");
+    } else {
+        pthread_mutex_lock(&philo->right_fork->fork);
+        print_action(philo, "has taken a fork");
+        pthread_mutex_lock(&philo->left_fork->fork);
+        print_action(philo, "has taken a fork");
+    }
+
+
+    // pthread_mutex_lock(&philo->right_fork->fork);
+    // print_action(philo, "has taken a fork");
+    // pthread_mutex_lock(&philo->left_fork->fork);
+    // print_action(philo, "has taken a fork");
 
     print_action(philo, "is eating");
     write_eaten(philo);
-    ft_usleep(philo->table->time_to_eat);
+    ft_usleep(philo->table->time_to_eat, philo->table);
     
     write_last_meal(philo, philo->table);
 
@@ -37,7 +54,7 @@ void    p_eating(t_philo *philo)
 void    p_sleep(t_philo *philo)
 {
     print_action(philo, "is sleeping");
-    ft_usleep(philo->table->time_to_sleep);
+    ft_usleep(philo->table->time_to_sleep, philo->table);
 }
 void    p_think(t_philo *philo)
 {
