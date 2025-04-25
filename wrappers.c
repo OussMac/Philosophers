@@ -16,7 +16,7 @@ bool    check_last_meal(t_philo *philo)
     if (get_time(philo->table) - philo->last_meal >= philo->table->time_to_die)
     {
         pthread_mutex_lock(&philo->table->print_lock);
-        printf(GRN"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , get_time(philo->table) - philo->last_meal, philo->table->time_to_die);
+        printf(RED"===> philo %d's last_meal %ld >= %ld time_to_die\n"RST,philo->ph_id , get_time(philo->table) - philo->last_meal, philo->table->time_to_die);
         pthread_mutex_unlock(&philo->table->print_lock);
         pthread_mutex_unlock(&philo->table->write_lock);
         return(true);
@@ -82,5 +82,16 @@ bool    check_nbr(t_table *table)
         return (true);
     }
     pthread_mutex_unlock(&table->nbr_lock);
+    return (false);
+}
+bool    check_forks(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->table->forks_lock);
+    if (philo->left_fork->fork_id < philo->right_fork->fork_id)
+    {
+        pthread_mutex_unlock(&philo->table->forks_lock);
+        return(true);
+    }
+    pthread_mutex_unlock(&philo->table->forks_lock);
     return (false);
 }

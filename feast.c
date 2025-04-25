@@ -5,10 +5,10 @@ void    *philosopher(void *arg)
     t_philo *philo;
     
     philo = (t_philo *) arg;
-    if (philo->ph_id % 2 == 0)
-        ft_usleep(3, philo->table);
     while (true)
     {
+        if (philo->ph_id % 2 == 0)
+            ft_usleep(5, philo->table);
         if (check_end_flag(philo->table) || check_eaten(philo))
         {
             set_philo_nbr(philo->table);
@@ -25,17 +25,21 @@ void    *watcher(void *arg)
 {
     t_table *table;
     int     i;
+    int     ph_nbr;
 
     table = (void *)arg;
     while (true)
     {
         i = 0;
-        while(i < table->philo_number)
+        pthread_mutex_lock(&table->nbr_lock);
+        ph_nbr = table->philo_number;
+        pthread_mutex_unlock(&table->nbr_lock);
+        while(i < ph_nbr)
         {
             if (check_last_meal(&table->philos[i]))
             {
                 write_death(&table->end_feast, table);
-                print_action(&table->philos[i], "died");
+                print_action(&table->philos[i], RED"died"RST);
                 return (NULL);
             }
             if (check_nbr(table))
@@ -45,7 +49,7 @@ void    *watcher(void *arg)
             }
             i++;
         }
-        ft_usleep(100, table);
+        ft_usleep(5, table);
     }
     return (NULL);
 }

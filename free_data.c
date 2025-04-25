@@ -38,4 +38,5 @@ void    clean_up(t_table *table)
     pthread_mutex_destroy(&table->write_lock);
     pthread_mutex_destroy(&table->nbr_lock);
     pthread_mutex_destroy(&table->sleep_lock);
+    pthread_mutex_destroy(&table->forks_lock);
 }

@@ -70,6 +70,7 @@ typedef struct s_table
     pthread_mutex_t write_lock;
     pthread_mutex_t nbr_lock;
     pthread_mutex_t sleep_lock;
+    pthread_mutex_t forks_lock;
 } t_table;
 
 // parsing and input.
@@ -101,6 +102,7 @@ void    write_eaten(t_philo *philo);
 bool    check_eaten(t_philo *philo);
 void    set_philo_nbr(t_table *table);
 bool    check_nbr(t_table *table);
+bool    check_forks(t_philo *philo);
 
 // time
 int     ft_usleep(long miliseconds, t_table *table);

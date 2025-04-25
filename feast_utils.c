@@ -23,16 +23,25 @@ void    p_eating(t_philo *philo)
 {
 
     // algo always pickup lowest index fork to prevent a deadlock better
-    if (philo->left_fork->fork_id < philo->right_fork->fork_id) {
+
+    // pthread_mutex_lock(&philo->table->print_lock);
+    // printf(YLW"left = %d < right = %d \n"RST, philo->left_fork->fork_id, philo->right_fork->fork_id);
+    // pthread_mutex_unlock(&philo->table->print_lock);
+
+
+    if (check_forks(philo)) // problem is fork id have value 0 and not initalized correctly
+    {
         pthread_mutex_lock(&philo->left_fork->fork);
-        print_action(philo, "has taken a fork");
+        print_action(philo, GRN"has taken a fork"RST);
         pthread_mutex_lock(&philo->right_fork->fork);
-        print_action(philo, "has taken a fork");
-    } else {
+        print_action(philo, GRN"has taken a fork"RST);
+    } 
+    else
+    {
         pthread_mutex_lock(&philo->right_fork->fork);
-        print_action(philo, "has taken a fork");
+        print_action(philo, BLU"has taken a fork"RST);
         pthread_mutex_lock(&philo->left_fork->fork);
-        print_action(philo, "has taken a fork");
+        print_action(philo, BLU"has taken a fork"RST);
     }
 
 
@@ -41,7 +50,7 @@ void    p_eating(t_philo *philo)
     // pthread_mutex_lock(&philo->left_fork->fork);
     // print_action(philo, "has taken a fork");
 
-    print_action(philo, "is eating");
+    print_action(philo, MGN"is eating"RST);
     write_eaten(philo);
     ft_usleep(philo->table->time_to_eat, philo->table);
     
@@ -58,5 +67,5 @@ void    p_sleep(t_philo *philo)
 }
 void    p_think(t_philo *philo)
 {
-    print_action(philo, "is thinking");
+    print_action(philo, YLW"is thinking"RST);
 }

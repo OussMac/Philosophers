@@ -49,7 +49,7 @@ int init_table_data( t_table *table)
         // initing forks
         table->philos[i].left_fork->fork_id = i;
         table->philos[i].right_fork->fork_id = (i + 1) % table->philo_number;
-        pthread_mutex_init(&table->forks->fork + i, NULL);
+        pthread_mutex_init(&table->forks[i].fork, NULL);
         i++;
     }
     return(EXIT_SUCCESS);
@@ -68,7 +68,8 @@ int allocate_data(t_table *table)
         || pthread_mutex_init(&table->eat_lock, NULL) != 0 
         || pthread_mutex_init(&table->write_lock, NULL) != 0 
         || pthread_mutex_init(&table->nbr_lock, NULL) != 0 
-        || pthread_mutex_init(&table->sleep_lock, NULL) != 0)
+        || pthread_mutex_init(&table->sleep_lock, NULL) != 0 
+        || pthread_mutex_init(&table->forks_lock, NULL) != 0)
         return(free(table->forks), free(table->philos), EXIT_FAILURE);
     return(EXIT_SUCCESS);
 }
